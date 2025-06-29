@@ -1,4 +1,4 @@
-# ME
+# Notes to me
     > npx create-next-app@15.3.2
         --> installed a specfic version
     
