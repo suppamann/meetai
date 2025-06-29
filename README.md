@@ -10,6 +10,7 @@
         --> do all of this once instead of installing components one by one.
         --> at the end, just remove the components that you are not using
 
+ssh-keygen -t ed25519 -C "your_email@example.com"
 
 -----------------------------------------******************-----------------------------------
 
