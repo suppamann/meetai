@@ -1,19 +1,3 @@
-# Notes to me
-    > npx create-next-app@15.3.2
-        --> installed a specfic version
-    
-    > npx shadcn@2.5.0 init
-        --> installed a specific version
-
-    > npx shadcn@2.5.0 add --all
-        --> add all components from this specific version, select peer deps
-        --> do all of this once instead of installing components one by one.
-        --> at the end, just remove the components that you are not using
-
-ssh-keygen -t ed25519 -C "your_email@example.com"
-
------------------------------------------******************-----------------------------------
-
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
