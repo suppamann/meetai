@@ -11,6 +11,5 @@ const envSchema = z.object({
 });
 
 const env = envSchema.parse(process.env);
-console.log({env_data:env});
 
 export const db = drizzle(env.DATABASE_URL);
