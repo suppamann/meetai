@@ -8,7 +8,6 @@ import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 
-
 import { authClient } from "@/lib/auth-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -38,26 +37,28 @@ const SignInView = () => {
   });
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
-  const onSubmit =  (data: z.infer<typeof formSchema>)=>{
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     setError(null);
-
-    const {error}=  authClient.signIn.email({
-      email: data.email,
-      password: data.password,
-    },
-    {
-      onSuccess: () =>{
-        router.push("/")
+    setPending(true);
+    authClient.signIn.email(
+      {
+        email: data.email,
+        password: data.password,
       },
-      onError: ({error})=>{
-        setError(error.message)     
+      {
+        onSuccess: () => {
+          setPending(false);
+          router.push("/");
+        },
+        onError: ({ error }) => {
+          setPending(false);
+          setError(error.message);
+        },
       }
-    },
-  )
-
-console.log("error is::::::::::::::::",error)
-  }
+    );
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -113,10 +114,10 @@ console.log("error is::::::::::::::::",error)
                 {!!error && (
                   <Alert className="bg-destructive/10 border-none">
                     <OctagonAlertIcon className="h-4 w-4 !text-destructive" />
-                    <AlertTitle>Error</AlertTitle>
+                    <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-                <Button type="submit" className="w-full">
+                <Button type="submit" disabled={pending} className="w-full">
                   Sign in
                 </Button>
                 <div className="relative text-center text-sm after:border-border after:absolute after:border-t after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center">
@@ -125,10 +126,20 @@ console.log("error is::::::::::::::::",error)
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    disabled={pending}
+                    className="w-full"
+                  >
                     Google
                   </Button>
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    disabled={pending}
+                    className="w-full"
+                  >
                     Github
                   </Button>
                 </div>
