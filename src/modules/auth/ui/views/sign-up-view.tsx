@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { authClient } from "@/lib/auth-client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,29 +21,35 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
-const formSchema = z.object({
-  name: z.string().min(1,{message: "Name is required"}),
-  email: z.string().email(),
-  password: z.string().nonempty({message:"Password is required"}).min(8, { message: "Password must be at least 8 characters long" }),
-  confirmPassword: z.string().min(8,{message:"Password is required"})
-})
-.refine(data=> data.password===data.confirmPassword,{
-  message:"Passwords doesn't match",
-  path:["confirmPassword"]
-});
+const formSchema = z
+  .object({
+    name: z.string().min(1, { message: "Name is required" }),
+    email: z.string().email(),
+    password: z
+      .string()
+      .nonempty({ message: "Password is required" })
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    confirmPassword: z.string().min(8, { message: "Password is required" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords doesn't match",
+    path: ["confirmPassword"],
+  });
 
 const SignUpView = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name:"",
+      name: "",
       email: "",
       password: "",
-      confirmPassword:"",
+      confirmPassword: "",
     },
   });
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -52,14 +58,36 @@ const SignUpView = () => {
     setPending(true);
     authClient.signUp.email(
       {
-        name:data.name,
+        name: data.name,
         email: data.email,
         password: data.password,
       },
       {
         onSuccess: () => {
           setPending(false);
-          router.push("/");
+          router.push("/"); // sign-in callback works, signup needs manual handling
+        },
+        onError: ({ error }) => {
+          setPending(false);
+          setError(error.message);
+        },
+      }
+    );
+  };
+
+  const onSocial = (provider: "github" | "google") => {
+    setError(null);
+    setPending(true);
+
+    //in signUp use signIn
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
         },
         onError: ({ error }) => {
           setPending(false);
@@ -178,16 +206,18 @@ const SignUpView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => onSocial("google")}
                   >
-                    Google
+                    <FaGoogle />
                   </Button>
                   <Button
                     variant="outline"
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => onSocial("github")}
                   >
-                    Github
+                    <FaGithub />
                   </Button>
                 </div>
                 <div className="text-center text-sm">
@@ -217,4 +247,3 @@ const SignUpView = () => {
 };
 
 export default SignUpView;
-  
