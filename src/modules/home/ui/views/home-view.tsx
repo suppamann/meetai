@@ -15,7 +15,12 @@ export const HomeView = () => {
     <div className="flex flex-col p-4 gap-y-4">
       <div className="flex flex-col space-y-4 items-center justify-center min-h-screen">
         <h1 className="text-center text-7xl">hello ACHU🌏❤️</h1>
-        <p>Logged in as {session.user.name}</p>
+        <p>
+          Logged in as{" "}
+          <span className="font-extrabold uppercase text-xl border-2 border-accent-foreground px-2">
+            {session.user.name}
+          </span>
+        </p>
         <Button
           variant="destructive"
           onClick={() =>
