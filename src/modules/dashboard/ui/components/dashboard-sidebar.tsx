@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -12,8 +15,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const firstSection = [
   {
@@ -54,7 +56,9 @@ export const DashboardSidebar = () => {
             <SidebarMenu>
               {firstSection.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton>
+                  <SidebarMenuButton className={cn(
+                  "h-10 hover:bg-linear-to-r/oklch border-transparent hover:border-[#5D6B68] from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50  "
+                  )}>
                     <Link href={item.href}>
                       <item.icon className="size-5" />
                       <span className="text-sm font-medium tracking-tight">
