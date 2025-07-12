@@ -12,7 +12,7 @@ export const HomeView = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="flex flex-col p-4 gap-y-4">
+    <div className="flex flex-col p-4 gap-y-4 bg-slate-500">
       <div className="flex flex-col space-y-4 items-center justify-center min-h-screen">
         <h1 className="text-center text-7xl">hello ACHU🌏❤️</h1>
         <p>
