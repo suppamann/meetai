@@ -1,41 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 export const HomeView = () => {
-  const { data: session } = authClient.useSession();
-  const router = useRouter();
+  const trpc = useTRPC();
+  const { data } = useQuery(
+    trpc.hello.queryOptions({ text: "Achu❤️🌏" })
+  );
 
-  if (!session) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
   return (
-    <div className="flex flex-col p-4 gap-y-4 bg-slate-500">
-      <div className="flex flex-col space-y-4 items-center justify-center min-h-screen">
-        <h1 className="text-center text-7xl">hello ACHU🌏❤️</h1>
-        <p>
-          Logged in as{" "}
-          <span className="font-extrabold uppercase text-xl border-2 border-accent-foreground px-2">
-            {session.user.name}
-          </span>
-        </p>
-        <Button
-          variant="destructive"
-          onClick={() =>
-            authClient.signOut({
-              fetchOptions: {
-                onSuccess: () => {
-                  router.push("/sign-in");
-                },
-              },
-            })
-          }
-        >
-          Sign Out
-        </Button>
-      </div>
+    <div className="flex flex-col p-4 gap-y-4 bg-slate-500 min-h-svh">
+      <p className="text-2xl text-center">{data?.greeting}</p>
     </div>
   );
 };
