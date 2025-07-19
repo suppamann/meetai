@@ -17,12 +17,13 @@ import {
 } from "@/components/ui/drawer";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { GeneratedAvatar } from "@/components/ui/generated-avatar";
+
 import { authClient } from "@/lib/auth-client";
 import { ChevronRight, CreditCardIcon, LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
+import { GeneratedAvatar } from "@/components/generated-avatar";
 
 export const DashboardUserButton = () => {
   const router = useRouter();

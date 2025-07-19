@@ -15,6 +15,13 @@
       "when": 1751331119580,
       "tag": "0001_perfect_sway",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752547117315,
+      "tag": "0002_strong_iron_monger",
+      "breakpoints": true
     }
   ]
 }
