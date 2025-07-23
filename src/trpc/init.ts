@@ -1,10 +1,12 @@
-import { initTRPC } from '@trpc/server';
-import { cache } from 'react';
+import { auth } from "@/lib/auth";
+import { initTRPC, TRPCError } from "@trpc/server";
+import { headers } from "next/headers";
+import { cache } from "react";
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
-  return { userId: 'AchuMyLove' };
+  return { userId: "AchuMyLove" };
 });
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
@@ -20,3 +22,16 @@ const t = initTRPC.create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+
+export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
+  //have current user info/session in all future procedurs
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+  }
+
+  return next({ ctx: { ...ctx, auth: session } });
+});
