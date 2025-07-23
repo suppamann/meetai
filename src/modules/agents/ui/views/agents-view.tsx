@@ -4,6 +4,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { LoadingState } from "@/components/loading-state";
 import { ErrorState } from "@/components/error-state";
+import { DataTable } from "../components/data-table";
+import { columns } from "../components/columns";
+import { EmptyState } from "@/components/empty-state";
 // import { LoadingState } from "@/components/loading-state";
 // import { ErrorState } from "@/components/error-state";
 
@@ -36,19 +39,21 @@ export const AgentsView = () => {
   // hydrated from the server so data is never undefined as it was with useQuery()
   // also make sure to use prefetch in parent component when using useSuspenseQuery
   const { data } = useSuspenseQuery(trpc.agents.getMany.queryOptions());
+
   return (
     <div>
       <div>
-        {data.map((e, idx) => {
-          return (
-            <div key={idx} className="flex flex-row gap-x-8 justify-between px-8 mb-3.5">
-              <h1 className="font-extrabold text-primary">{e.name}</h1>
-              <h2>{e.instructions}</h2>
-              <h2 className="text-muted-foreground">{new Date(e.updatedAt).toLocaleDateString("en-IN")}</h2>
-            </div>
-          );
-        })}
-        <div>{JSON.stringify(data, null, 2)}</div>
+        <div className="flex flex-1 flex-col pb-4 px-4 md:px-8 gap-y-4">
+          <DataTable data={data} columns={columns} />
+          {data.length === 0 ? (
+            <EmptyState
+              title="Create your first Agent"
+              description="Create an agent to join your meetings. Each agent will follow your instructions and can interact with participants during the call"
+            />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );
