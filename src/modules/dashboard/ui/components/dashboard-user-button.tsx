@@ -69,17 +69,17 @@ export const DashboardUserButton = () => {
             <DrawerTitle>{data.user.email}</DrawerTitle>
           </DrawerHeader>
           <DrawerFooter>
-            <Button variant={"outline"} className="cursor-pointer justify-between">
-              Billing
+            <Button variant={"outline"} className="cursor-pointer ">
               <CreditCardIcon className="size-4" />
+              Billing
             </Button>
             <Button
-              className="cursor-pointer justify-between"
+              className="cursor-pointer"
               onClick={onLogout}
               variant={"outline"} 
             >
-              Logout
               <LogOutIcon className="size-4" />
+              Logout
             </Button>
           </DrawerFooter>
         </DrawerContent>
@@ -109,7 +109,7 @@ export const DashboardUserButton = () => {
         </div>
         <ChevronRight className="size-4 shrink-0" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" side="right" className="w-72">
+      <DropdownMenuContent align="end" side="right" className="w-63">
         <DropdownMenuLabel>
           <div className="flex flex-col gap-1">
             <span className="font-medium truncate">{data.user.name}</span>
@@ -119,16 +119,16 @@ export const DashboardUserButton = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer justify-between">
-          Billing
+        <DropdownMenuItem className="cursor-pointer">
           <CreditCardIcon className="size-4" />
+          Billing
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer justify-between"
+          className="cursor-pointer"
           onClick={onLogout}
         >
-          Logout
           <LogOutIcon className="size-4" />
+          Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

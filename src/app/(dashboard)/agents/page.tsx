@@ -30,7 +30,7 @@ const Page = async ({ searchParams }: Props) => {
   }
 
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions({...filters})); //reduces load time
+  void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions({...filters})); //prefetch reduces UX load experience/time
 
   return (
     <>

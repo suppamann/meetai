@@ -9,12 +9,14 @@ import { columns } from "../components/columns";
 import { EmptyState } from "@/components/empty-state";
 import { useAgentsFilter } from "../../hooks/use-agents-filters";
 import { DataPagination } from "../components/data-pagination";
+import { useRouter } from "next/navigation";
 // import { LoadingState } from "@/components/loading-state";
 // import { ErrorState } from "@/components/error-state";
 
 export const AgentsView = () => {
   const trpc = useTRPC();
   const [filters, setFilters] = useAgentsFilter();
+  const router = useRouter();
 
   /* using a fetch method and rendering based on the response
   const { data, isLoading, isError } = useQuery(
@@ -49,7 +51,11 @@ export const AgentsView = () => {
     <div>
       <div>
         <div className="flex flex-1 flex-col pb-4 px-4 md:px-8 gap-y-4">
-          <DataTable data={data.items} columns={columns} />
+          <DataTable
+            data={data.items}
+            columns={columns}
+            onRowClick={(row) => router.push(`/agents/${row.id}`)}
+          />
           <DataPagination
             page={filters.page}
             totalPages={data.totalPages}
