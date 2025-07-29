@@ -35,11 +35,29 @@ export const AgentForm = ({
 }: AgentFormProps) => {
   const trpc = useTRPC();
   /****************************USER ROUTER***************************************************/
-//   const router = useRouter();
+  //   const router = useRouter();
   const queryClient = useQueryClient();
 
   const createAgent = useMutation(
     trpc.agents.create.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
+
+        // TODO invalidate free tier usage
+
+        onSuccess?.(); //made onSuccess optional so that it would close the Agent form
+      },
+      onError: (error) => {
+        //Toaster component added in Root layout
+        toast.error(error.message);
+
+        //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
+      },
+    })
+  );
+
+  const updateAgent = useMutation(
+    trpc.agents.update.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
         if (initialValues?.id) {
@@ -47,10 +65,9 @@ export const AgentForm = ({
             trpc.agents.getOne.queryOptions({ id: initialValues.id })
           );
         }
-        onSuccess?.(); //made onSuccess optional so that it would close the Agent form
+        onSuccess?.();
       },
       onError: (error) => {
-        //Toaster component added in Root layout
         toast.error(error.message);
 
         //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
@@ -67,10 +84,10 @@ export const AgentForm = ({
   });
 
   const isEdit = !!initialValues?.id;
-  const isPending = createAgent.isPending;
+  const isPending = createAgent.isPending || updateAgent.isPending;
   const onSubmit = (values: z.infer<typeof agentsInsertSchema>) => {
     if (isEdit) {
-      console.log("TODO: update Agent");
+      updateAgent.mutate({ ...values, id: initialValues.id });
     } else {
       createAgent.mutate(values);
     }
