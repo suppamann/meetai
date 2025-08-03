@@ -14,7 +14,7 @@ export const UpdateAgentDialog = ({ open, onOpenChange, initialValues  }: Update
       title="Edit Agent"
       description="Edit agent details"
       open={open}
-      openChange={onOpenChange}
+      onOpenChange={onOpenChange}
     >
       <AgentForm
         onSuccess={() => onOpenChange(false)}

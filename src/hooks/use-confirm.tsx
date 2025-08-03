@@ -30,7 +30,7 @@ export const useConfirm = (
   const ConfirmationDialog = () => (
     <ResponsiveDialouge
       open={promise !== null}
-      openChange={handleClose}
+      onOpenChange={handleClose}
       title={title}
       description={description}
     >
