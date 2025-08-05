@@ -30,11 +30,15 @@ export const CommandSelect = ({
   onSearch,
   value,
   placeholder = "Select an option",
-  isSearchable,
   className,
 }: Props) => {
   const [open, setOpen] = useState(false);
   const selectedOption = options.find((option) => option.value === value);
+
+  const handleOpenChange = (open: boolean) => {
+    onSearch?.("");
+    setOpen(open);
+  };
   return (
     <>
       <Button
@@ -52,7 +56,7 @@ export const CommandSelect = ({
       </Button>
       <CommandResponsiveDialog
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={handleOpenChange}
         shouldFilter={!onSearch}
       >
         {/* shouldFilter is a new option added to CommandResponsiveDialog shadcn component.

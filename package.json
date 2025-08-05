@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
-  },
+    },
   "dependencies": {
     "@dicebear/collection": "^9.2.3",
     "@dicebear/core": "^9.2.3",
