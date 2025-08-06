@@ -42,7 +42,7 @@ export const AgentIdView = ({ agentId }: Props) => {
         router.push("/agents");
       },
       onError: (error) => {
-        toast.message(error.message);
+        toast.error(error.message);
       },
     })
   );

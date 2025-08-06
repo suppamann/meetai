@@ -30,7 +30,6 @@ export const DashboardUserButton = () => {
   const isMobile = useIsMobile();
 
   const { data, isPending } = authClient.useSession();
-  // console.log(authClient.useSession());
 
   if (isPending || !data?.user) return null;
 
