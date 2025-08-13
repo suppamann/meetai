@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
-    },
+  },
   "dependencies": {
     "@dicebear/collection": "^9.2.3",
     "@dicebear/core": "^9.2.3",
@@ -41,6 +41,8 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@stream-io/node-sdk": "^0.5.1",
+    "@stream-io/video-react-sdk": "^1.19.5",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-table": "^8.21.3",
     "@trpc/client": "^11.4.3",
