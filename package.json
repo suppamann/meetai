@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "dev:webhook": "ngrok http --url=saving-quagga-concise.ngrok-free.app 3000"
+    "dev:webhook": "dotenv -- ngrok http --url=$NGROK_URL 3000"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.3",
@@ -87,6 +87,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
