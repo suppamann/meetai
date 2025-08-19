@@ -25,6 +25,7 @@ import { MAX_PAGE_SIZE } from "@/constants";
 import { CommandSelect } from "@/components/command-select";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { NewAgentDialog } from "@/modules/agents/ui/components/new-agent-dialog";
+import { useRouter } from "next/navigation";
 
 interface MeetingFormProps {
   onSuccess?: (id?: string) => void;
@@ -38,8 +39,7 @@ export const MeetingForm = ({
   initialValues,
 }: MeetingFormProps) => {
   const trpc = useTRPC();
-  /****************************USER ROUTER***************************************************/
-  //   const router = useRouter();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [agentSearch, setAgentSearch] = useState("");
   const [openNewAgentDialog, setOpenNewAgentDialog] = useState(false);
@@ -58,14 +58,20 @@ export const MeetingForm = ({
           trpc.meetings.getMany.queryOptions({})
         );
 
-        // TODO invalidate free tier usage
+        // invalidate free tier usage
+        await queryClient.invalidateQueries(
+          trpc.premium.getFreeUsage.queryOptions()
+        );
 
         onSuccess?.(data.id);
       },
       onError: (error) => {
         toast.error(error.message);
 
-        //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
+        // Check if error code in "FORBIDDEN", redirect to /upgrades
+        if (error.data?.code === "FORBIDDEN") {
+          router.push("/upgrade");
+        }
       },
     })
   );
@@ -83,8 +89,6 @@ export const MeetingForm = ({
       },
       onError: (error) => {
         toast.error(error.message);
-
-        //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
       },
     })
   );
@@ -109,7 +113,10 @@ export const MeetingForm = ({
 
   return (
     <>
-    <NewAgentDialog open= {openNewAgentDialog} onOpenChange={setOpenNewAgentDialog} />
+      <NewAgentDialog
+        open={openNewAgentDialog}
+        onOpenChange={setOpenNewAgentDialog}
+      />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex items-center justify-center"></div>

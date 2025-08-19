@@ -91,8 +91,6 @@ export const meetingsProcessing = inngest.createFunction(
         JSON.stringify(transcriptWithSpeakers)
     );
 
-console.log({inngestFn:output, event});
-
     await step.run("save-summary", async()=>{
         await db
         .update(meetings)

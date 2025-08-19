@@ -33,7 +33,6 @@ const Page = async ({ params }: Props) => {
   
 
   // TODO prefetch meeting.getTranscript
-  MeetingIdViewLoading;
   return (
     <HydrationBoundary>
       <Suspense fallback={<MeetingIdViewLoading />}>

@@ -68,14 +68,18 @@ export const DashboardUserButton = () => {
             <DrawerTitle>{data.user.email}</DrawerTitle>
           </DrawerHeader>
           <DrawerFooter>
-            <Button variant={"outline"} className="cursor-pointer ">
+            <Button
+              variant={"outline"}
+              className="cursor-pointer"
+              onClick={() => authClient.customer.portal()}
+            >
               <CreditCardIcon className="size-4" />
               Billing
             </Button>
             <Button
               className="cursor-pointer"
               onClick={onLogout}
-              variant={"outline"} 
+              variant={"outline"}
             >
               <LogOutIcon className="size-4" />
               Logout
@@ -85,8 +89,6 @@ export const DashboardUserButton = () => {
       </Drawer>
     );
   }
-
- 
 
   return (
     <DropdownMenu>
@@ -118,14 +120,14 @@ export const DashboardUserButton = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => authClient.customer.portal()}
+        >
           <CreditCardIcon className="size-4" />
           Billing
         </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onClick={onLogout}
-        >
+        <DropdownMenuItem className="cursor-pointer" onClick={onLogout}>
           <LogOutIcon className="size-4" />
           Logout
         </DropdownMenuItem>

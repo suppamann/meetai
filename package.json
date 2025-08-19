@@ -9,7 +9,8 @@
     "lint": "next lint",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "dev:webhook": "ngrok http --url=saving-quagga-concise.ngrok-free.app 3000"
+    "dev:webhook": "ngrok http --url=saving-quagga-concise.ngrok-free.app 3000",
+    "dev:inngest": "npx inngest-cli@latest dev"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.3",
@@ -17,6 +18,8 @@
     "@hookform/resolvers": "^5.1.1",
     "@inngest/agent-kit": "^0.9.0",
     "@neondatabase/serverless": "^1.0.1",
+    "@polar-sh/better-auth": "^1.1.0",
+    "@polar-sh/sdk": "^0.34.11",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",

@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface AgentFormProps {
   onSuccess?: () => void;
@@ -34,24 +35,32 @@ export const AgentForm = ({
   initialValues,
 }: AgentFormProps) => {
   const trpc = useTRPC();
-  /****************************USER ROUTER***************************************************/
-  //   const router = useRouter();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const createAgent = useMutation(
     trpc.agents.create.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.agents.getMany.queryOptions({})
+        );
 
-        // TODO invalidate free tier usage
+        // invalidate free tier usage
+        await queryClient.invalidateQueries(
+          trpc.premium.getFreeUsage.queryOptions()
+        );
 
         onSuccess?.(); //made onSuccess optional so that it would close the Agent form
       },
       onError: (error) => {
         //Toaster component added in Root layout
         toast.error(error.message);
+        console.log({ err: error });
 
-        //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
+        // Check if error code in "FORBIDDEN", redirect to /upgrades
+        if (error.data?.code === "FORBIDDEN") {
+          router.push("/upgrade");
+        }
       },
     })
   );
@@ -69,8 +78,6 @@ export const AgentForm = ({
       },
       onError: (error) => {
         toast.error(error.message);
-
-        //TODO Check if error code in "FORBIDDEN", redirect to /upgrades
       },
     })
   );
