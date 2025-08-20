@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { z } from "zod";
 
-//not a good practise
+//not a good practice
 // export const db = drizzle(process.env.DATABASE_URL!);
 
 
