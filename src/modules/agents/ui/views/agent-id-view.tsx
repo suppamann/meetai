@@ -54,7 +54,7 @@ export const AgentIdView = ({ agentId }: Props) => {
     `The following action will remove ${data.meetingCount} associated meetings`
   );
 
-  const handleRemovAgent = async () => {
+  const handleRemoveAgent = async () => {
     const ok = await confirmRemove();
 
     if (!ok) return;
@@ -75,7 +75,7 @@ export const AgentIdView = ({ agentId }: Props) => {
           agentId={data.id}
           agentName={data.name}
           onEdit={() => setUpdateAgentDialogOpen(true)}
-          onRemove={handleRemovAgent}
+          onRemove={handleRemoveAgent}
         />
         <div className=" bg-white rounded-lg border">
           <div className="px-4 py-5 gap-y-5 flex flex-col">
