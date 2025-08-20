@@ -91,7 +91,6 @@ export const meetingsRouter = createTRPCRouter({
       const speakerIds = [
         ...new Set(transcript.map((item) => item.speaker_id)),
       ];
-      console.log({ speakerIds });
 
       const userSpeakers = await db
         .select()

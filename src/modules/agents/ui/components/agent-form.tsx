@@ -55,7 +55,6 @@ export const AgentForm = ({
       onError: (error) => {
         //Toaster component added in Root layout
         toast.error(error.message);
-        console.log({ err: error });
 
         // Check if error code in "FORBIDDEN", redirect to /upgrades
         if (error.data?.code === "FORBIDDEN") {

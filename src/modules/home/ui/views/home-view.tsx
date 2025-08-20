@@ -7,7 +7,6 @@ interface Props{
 
 export const HomeView = ({username}:Props) => {
   const user = authClient.useSession();
-  console.log({ user });
   return (
     <div className=" flex flex-col items-center justify-center h-screen">
       <p className="text-2xl">
