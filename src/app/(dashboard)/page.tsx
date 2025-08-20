@@ -12,8 +12,9 @@ const Page = async () => {
   if (!session) {
     redirect("/sign-in");
   }
+  const username = session.user.name;
 
-  return <HomeView />;
+  return <HomeView username={username}/>;
 };
 
 export default Page;

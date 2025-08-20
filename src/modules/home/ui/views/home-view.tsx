@@ -1,8 +1,11 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+interface Props{
+  username: string;
+}
 
-export const HomeView = () => {
+export const HomeView = ({username}:Props) => {
   const user = authClient.useSession();
   console.log({ user });
   return (
@@ -10,7 +13,7 @@ export const HomeView = () => {
       <p className="text-2xl">
         Welcome{" "}
         <span className="text-[#c1c41c] font-semibold capitalize text-4xl">
-          {user.data?.user.name}!!
+          {username}!!
         </span>
       </p>
     </div>
